@@ -1,0 +1,48 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26124.0
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ExpandableAllocator", "ExpandableAllocator\ExpandableAllocator.fsproj", "{1D48B022-F6DE-4007-9F0C-1F67431F9098}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ExpandableAllocator.Tests", "ExpandableAllocator.Tests\ExpandableAllocator.Tests.fsproj", "{21C891DC-FC76-4045-88BD-D107C166952F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1D48B022-F6DE-4007-9F0C-1F67431F9098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D48B022-F6DE-4007-9F0C-1F67431F9098}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D48B022-F6DE-4007-9F0C-1F67431F9098}.Debug|x64.ActiveCfg = Debug|x64
+		{1D48B022-F6DE-4007-9F0C-1F67431F9098}.Debug|x64.Build.0 = Debug|x64
+		{1D48B022-F6DE-4007-9F0C-1F67431F9098}.Debug|x86.ActiveCfg = Debug|x86
+		{1D48B022-F6DE-4007-9F0C-1F67431F9098}.Debug|x86.Build.0 = Debug|x86
+		{1D48B022-F6DE-4007-9F0C-1F67431F9098}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D48B022-F6DE-4007-9F0C-1F67431F9098}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D48B022-F6DE-4007-9F0C-1F67431F9098}.Release|x64.ActiveCfg = Release|x64
+		{1D48B022-F6DE-4007-9F0C-1F67431F9098}.Release|x64.Build.0 = Release|x64
+		{1D48B022-F6DE-4007-9F0C-1F67431F9098}.Release|x86.ActiveCfg = Release|x86
+		{1D48B022-F6DE-4007-9F0C-1F67431F9098}.Release|x86.Build.0 = Release|x86
+		{21C891DC-FC76-4045-88BD-D107C166952F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21C891DC-FC76-4045-88BD-D107C166952F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21C891DC-FC76-4045-88BD-D107C166952F}.Debug|x64.ActiveCfg = Debug|x64
+		{21C891DC-FC76-4045-88BD-D107C166952F}.Debug|x64.Build.0 = Debug|x64
+		{21C891DC-FC76-4045-88BD-D107C166952F}.Debug|x86.ActiveCfg = Debug|x86
+		{21C891DC-FC76-4045-88BD-D107C166952F}.Debug|x86.Build.0 = Debug|x86
+		{21C891DC-FC76-4045-88BD-D107C166952F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21C891DC-FC76-4045-88BD-D107C166952F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21C891DC-FC76-4045-88BD-D107C166952F}.Release|x64.ActiveCfg = Release|x64
+		{21C891DC-FC76-4045-88BD-D107C166952F}.Release|x64.Build.0 = Release|x64
+		{21C891DC-FC76-4045-88BD-D107C166952F}.Release|x86.ActiveCfg = Release|x86
+		{21C891DC-FC76-4045-88BD-D107C166952F}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+EndGlobal
