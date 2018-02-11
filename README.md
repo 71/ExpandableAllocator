@@ -1,5 +1,6 @@
-# ExpandableAllocator
-An allocator for .NET that grows lazily.
+ExpandableAllocator
+===================
+A low-level .NET allocator that grows lazily.
 
 ## Usage
 ```fsharp
@@ -30,6 +31,12 @@ NativePtr.read ptr |> should equal 42
 ```
 
 More examples can be seen in the [Tests.fs](./ExpandableAllocator.Tests/Tests.fs) file.
+
+## Installation
+[![NuGet](https://img.shields.io/nuget/vpre/ExpandableAllocator.svg)](https://nuget.org/packages/ExpandableAllocator)
+```powershell
+Install-Package ExpandableAllocator
+```
 
 ## How does it work?
 Internally, the `Allocator` **reserves** memory when it is created

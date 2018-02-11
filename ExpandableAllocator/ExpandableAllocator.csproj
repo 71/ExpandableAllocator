@@ -20,7 +20,7 @@
 
     <!-- NuGet properties -->
     <Title>ExpandableAllocator</Title>
-    <Summary>A .NET allocator that grows lazily.</Summary>
+    <Description>A low-level .NET allocator that grows lazily.</Description>
     <Copyright>Copyright 2018 (c) Gregoire Geis</Copyright>
     <Authors>Gregoire Geis</Authors>
 
