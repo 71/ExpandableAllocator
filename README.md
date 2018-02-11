@@ -3,19 +3,17 @@ An allocator for .NET that grows lazily.
 
 ## Usage
 ```fsharp
-let onetb = nativeint 0x1_000_000_000_000L
-
 // Reserve 1 TB of memory.
-use alloc = Allocator.Create(Protection.Read, onetb)
+use alloc = Allocator.Create(Protection.Read, 0x1_000_000_000_000L)
 
-let start = alloc.Start
-let ptr = NativePtr.fromNativeInt start
+let addr = alloc.Address
+let ptr = NativePtr.fromNativeInt addr
 
 // Actually allocate 512 bytes.
 alloc.ActualSize <- nativeint 512
 
 // Make sure the pointer hasn't moved.
-alloc.Start |> should equal start
+alloc.Address |> should equal addr
 
 // Read something.
 NativePtr.read ptr |> should equal 0

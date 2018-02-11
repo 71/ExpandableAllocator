@@ -12,7 +12,7 @@ open System.Runtime.ExceptionServices
 open System.Security
 
 
-let allocator(size) = Allocator.Create(Protection.Read ||| Protection.Write, size)
+let allocator(size: nativeint) = Allocator.Create(Protection.Read ||| Protection.Write, size)
 let kb = nativeint 1024
 let zero = nativeint 0
 
@@ -20,11 +20,11 @@ let zero = nativeint 0
 [<TestCase(1_000L); TestCase(1_000_000L); TestCase(1_000_000_000L); TestCase(1_000_000_000_000L)>]
 let ``should be able to reserve large chunks of memory`` (size: int64) =
     let size = nativeint size
-    let alloc = Allocator.TryCreate(Protection.Read, size)
+    let success, alloc = Allocator.TryCreate(Protection.Read, size)
     
-    alloc.IsSome |> shouldEqual true
+    success |> shouldEqual true
 
-    use alloc = alloc.Value
+    use alloc = alloc
 
     alloc.MaximumSize |> shouldEqual size
     alloc.ActualSize |> shouldEqual zero
@@ -40,7 +40,7 @@ let ``should have valid protection``(protection: Protection) =
         // test write protection
         alloc.TryReserve(kb) |> shouldEqual true
 
-        let ptr = NativePtr.ofNativeInt(alloc.Start)
+        let ptr = NativePtr.ofNativeInt(alloc.Address)
 
         NativePtr.write ptr 42
         NativePtr.read ptr |> shouldEqual 42
@@ -49,7 +49,7 @@ let ``should have valid protection``(protection: Protection) =
 [<HandleProcessCorruptedStateExceptions; SecurityCritical>]
 let ``should be able to change protection``() =
     use alloc = Allocator.Create(Protection.Read, kb)
-    let ptr = NativePtr.ofNativeInt(alloc.Start)
+    let ptr = NativePtr.ofNativeInt(alloc.Address)
 
     alloc.ActualSize <- nativeint 512
 
@@ -78,17 +78,17 @@ let ``should be able to change protection``() =
 [<Test>]
 let ``should not move memory on realloc`` () =
     let alloc = allocator(kb)
-    let start = alloc.Start
+    let addr = alloc.Address
 
     alloc.ActualSize |> shouldEqual (nativeint 0)
 
     alloc.TryReserve(nativeint 512) |> shouldEqual true
     alloc.ActualSize |> shouldEqual (nativeint 512)
-    alloc.Start |> shouldEqual start
+    alloc.Address |> shouldEqual addr
 
     alloc.TryReserve(nativeint 1024) |> shouldEqual true
     alloc.ActualSize |> shouldEqual (nativeint 1024)
-    alloc.Start |> shouldEqual start
+    alloc.Address |> shouldEqual addr
 
 [<Test>]
 let ``should be able to allocate memory until maximum is reached``() =

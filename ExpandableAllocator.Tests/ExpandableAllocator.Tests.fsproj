@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../ExpandableAllocator/ExpandableAllocator.fsproj" />
+    <ProjectReference Include="../ExpandableAllocator/ExpandableAllocator.csproj" />
   </ItemGroup>
 
   <ItemGroup>
