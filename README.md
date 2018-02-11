@@ -51,3 +51,4 @@ is called on the allocated memory region.
 [vf]: https://msdn.microsoft.com/library/windows/desktop/aa366892
 [mmap]: http://man7.org/linux/man-pages/man2/mmap.2.html
 [mprotect]: http://man7.org/linux/man-pages/man2/mprotect.2.html
+[munmap]: http://man7.org/linux/man-pages/man2/munmap.2.html
