@@ -28,9 +28,16 @@ alloc.Protection <- Protection.ReadWrite
 // Now, actually write our value.
 NativePtr.write ptr 42
 NativePtr.read ptr |> should equal 42
+
+// A safe wrapper is also provided.
+use stream = new ExpandableStream(alloc)
+
+stream.CanWrite |> should equal true
+stream.CanRead  |> should equal true
+stream.CanSeek  |> should equal true
 ```
 
-More examples can be seen in the [Tests.fs](./ExpandableAllocator.Tests/Tests.fs) file.
+More examples can be seen in the [Tests](./ExpandableAllocator.Tests) directory.
 
 ## Installation
 [![NuGet](https://img.shields.io/nuget/vpre/ExpandableAllocator.svg)](https://nuget.org/packages/ExpandableAllocator)

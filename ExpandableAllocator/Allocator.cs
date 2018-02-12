@@ -79,6 +79,8 @@ namespace ExpandableAllocator
         public Protection Protection
         {
             get => prot;
+            
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 bool ok;
@@ -90,10 +92,17 @@ namespace ExpandableAllocator
                         ok = Foreign.Windows.VirtualProtect(Address, size, value.GetWindowsValue(), out int _);
                         break;
 
+                    case OS.OSX:
+                        ok = Foreign.OSX.mprotect(Address, size, value.GetUnixValue()) == 0;
+                        break;
+
+                    case OS.Unix:
+                        ok = Foreign.Unix.mprotect(Address, size, value.GetUnixValue()) == 0;
+                        break;
+
                     default:
-                        ok = (os == OS.OSX
-                           ? Foreign.OSX.mprotect(Address, size, value.GetUnixValue())
-                           : Foreign.Unix.mprotect(Address, size, value.GetUnixValue())) == 0;
+                        // This cannot happen.
+                        ok = false;
                         break;
                 }
 
@@ -110,6 +119,8 @@ namespace ExpandableAllocator
         public IntPtr ActualSize
         {
             get => size;
+            
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
                 if (!TryReserve(value))
@@ -120,11 +131,13 @@ namespace ExpandableAllocator
         /// <summary>
         ///   Attempts to reserve the given amount of memory.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool TryReserve(long size) => TryReserve(new IntPtr(size));
 
         /// <summary>
         ///   Attempts to reserve the given amount of memory.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool TryReserve(IntPtr size)
         {
             IntPtr actualSize = this.size;
@@ -164,7 +177,7 @@ namespace ExpandableAllocator
         }
 
         /// <summary>
-        ///   Disposes the allocator, freeing all its reserved and allocated memory.
+        ///   Disposes of the allocator, freeing all its reserved and allocated memory.
         /// </summary>
         public void Dispose()
         {
@@ -198,7 +211,7 @@ namespace ExpandableAllocator
         ///   On success, an allocator that can be used to reserve memory.
         /// </param>
         /// <returns>
-        ///  Whether an allocator was successfully created.
+        ///   Whether an allocator was successfully created.
         /// </returns>
         public static bool TryCreate(Protection protection, IntPtr maxSize, out Allocator allocator)
         {
@@ -247,7 +260,7 @@ namespace ExpandableAllocator
         ///   On success, an allocator that can be used to reserve memory.
         /// </param>
         /// <returns>
-        ///  Whether an allocator was successfully created.
+        ///   Whether an allocator was successfully created.
         /// </returns>
         public static bool TryCreate(Protection protection, long maxSize, out Allocator allocator)
             => TryCreate(protection, new IntPtr(maxSize), out allocator);

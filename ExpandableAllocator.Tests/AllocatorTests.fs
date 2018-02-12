@@ -1,4 +1,4 @@
-module Tests
+module AllocatorTests
 
 #nowarn "9"
 
