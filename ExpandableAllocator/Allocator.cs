@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace ExpandableAllocator
 {
@@ -99,7 +100,7 @@ namespace ExpandableAllocator
                 if (ok)
                     prot = value;
                 else
-                    throw new IOException("Unable to change memory protection.");
+                    throw new IOException($"Unable to change memory protection: {Marshal.GetLastWin32Error()}.");
             }
         }
 
@@ -112,7 +113,7 @@ namespace ExpandableAllocator
             set
             {
                 if (!TryReserve(value))
-                    throw new IOException("Unable to change actual size of allocated memory.");
+                    throw new IOException($"Unable to change actual size of allocated memory: {Marshal.GetLastWin32Error()}.");
             }
         }
 
@@ -140,7 +141,7 @@ namespace ExpandableAllocator
             switch (os)
             {
                 case OS.Windows:
-                    IntPtr addr = Foreign.Windows.VirtualAlloc(Address, size, 0x00001000 /* */, prot.GetWindowsValue());
+                    IntPtr addr = Foreign.Windows.VirtualAlloc(Address, size, 0x00001000 /* MEM_RESERVE */, prot.GetWindowsValue());
                     
                     if (addr == IntPtr.Zero)
                         return false;
@@ -219,8 +220,8 @@ namespace ExpandableAllocator
 
                 default:
                     addr = os == OS.OSX
-                         ? Foreign.OSX.mmap(IntPtr.Zero, maxSize, 0x0 /* PROT_NONE */, 0, 0, IntPtr.Zero)
-                         : Foreign.Unix.mmap(IntPtr.Zero, maxSize, 0x0, 0, 0, IntPtr.Zero);
+                         ? Foreign.OSX.mmap(IntPtr.Zero, maxSize, 0x0 /* PROT_NONE */, 0x22 /* MAP_ANONYMOUS | MAP_PRIVATE */, -1, IntPtr.Zero)
+                         : Foreign.Unix.mmap(IntPtr.Zero, maxSize, 0x0, 0x22, -1, IntPtr.Zero);
                     break;
             }
 
@@ -271,7 +272,7 @@ namespace ExpandableAllocator
             if (TryCreate(protection, maxSize, out Allocator allocator))
                 return allocator;
             
-            throw new IOException("Could not create an allocator.");
+            throw new IOException($"Could not create an allocator: {Marshal.GetLastWin32Error()}.");
         }
 
         /// <summary>
